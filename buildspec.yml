@@ -6,4 +6,4 @@ phases:
   build:
     commands:
       - zip -r lambda-example.zip . -x '*.git*'
-      - aws ss cp lambda-example.zip s3://${S3_BUCKET}/lambda-example-1.0.0-${CODEBUILD_BUILD_NUMBER}.zip
+      - aws s3 cp lambda-example.zip s3://${S3_BUCKET}/lambda-example-1.0.0-${CODEBUILD_BUILD_NUMBER}.zip
