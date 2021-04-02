@@ -9,17 +9,17 @@ phases:
       python: 3.8
     commands:
       - pip install boto3==1.17.3
-  
+
   build:
     commands:
       - export PACKAGE_VERSION=1.0.0-$CODEBUILD_BUILD_NUMBER
       - mkdir build
-      - zip -j -r build/lambda-hw2-${PACKAGE_VERSION}.zip lambda-hw2/ 
+      - zip -j -r build/lambda-hw2-${PACKAGE_VERSION}.zip lambda-hw2/
       # - aws s3 cp lambda-hw2.zip s3://${S3_BUCKET}/lambda-hw2-1.0.0-${PACKAGE_VERSION}.zip
       - echo $VERSION
-  
+
 artifacts:
   name: hw2
+  base-directory: build
   files:
-    - build/*.zip
-  # base-directory: build
+    - '*.zip'
