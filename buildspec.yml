@@ -1,4 +1,7 @@
 version: 0.2
+env:
+  variables:
+    S3_BUCKET: raymond-packages-us-west-2
 
 phases:
   install:
