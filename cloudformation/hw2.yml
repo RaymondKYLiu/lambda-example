@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'HW2'
+Parameters:
+  Prefix:
+    Description: 'Prefix'
+    Type: 'String'
+    Default: 'hw2-cf'
+  AppVersion:
+    Type: 'String'
+    Default: '1.0.0-6'
+
+Resources:
+  S3BucketImageUpload:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Sub '${Prefix}-image-upload-${AWS::Region}'
+
+  RoleLambdaS3Upload:
+    Type: AWS::IAM::Role
+    Properties:
+      Description: 'Role for Lambda S3 upload'
+      RoleName: !Sub '${Prefix}-lambda-s3-upload-${AWS::Region}'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service:
+                - 'lambda.amazonaws.com'
+            Action:
+              - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+
+  LambdaS3Upload:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${Prefix}-lambda-s3-upload-${AWS::Region}'
+      Code:
+        S3Bucket: 'raymond-packages-us-west-2'
+        S3Key: !Sub hw2/lambda-hw2-${AppVersion}.zip
+      Runtime: python3.8
+      Handler: index.lambda_handler
+      Role: !GetAtt RoleLambdaS3Upload.Arn
