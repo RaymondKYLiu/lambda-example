@@ -18,8 +18,8 @@ phases:
       # - aws s3 cp lambda-hw2.zip s3://${S3_BUCKET}/lambda-hw2-1.0.0-${PACKAGE_VERSION}.zip
       - echo $VERSION
   
-  artifacts:
-    name: hw2
-    files:
-      - build/*.zip
-    base-directory: build
+artifacts:
+  name: hw2
+  files:
+    - build/*.zip
+  base-directory: build
