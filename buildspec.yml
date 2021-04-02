@@ -1,22 +1,19 @@
 version: 0.2
 env:
-  variables:
-    S3_BUCKET: raymond-packages-us-west-2
 
 phases:
   install:
     runtime-versions:
       python: 3.8
-    commands:
-      - pip install boto3==1.17.3
 
   build:
     commands:
-      - export PACKAGE_VERSION=1.0.0-$CODEBUILD_BUILD_NUMBER
+      - export APP_VERSION=1.0.0-$CODEBUILD_BUILD_NUMBER
+
       - mkdir build
-      - zip -j -r build/lambda-hw2-${PACKAGE_VERSION}.zip lambda-hw2/
-      # - aws s3 cp lambda-hw2.zip s3://${S3_BUCKET}/lambda-hw2-1.0.0-${PACKAGE_VERSION}.zip
-      - echo $VERSION
+      - zip -j -r build/lambda-hw2-${APP_VERSION}.zip lambda-hw2/
+
+      - python cloudformation/deploy.py
 
 artifacts:
   name: hw2
