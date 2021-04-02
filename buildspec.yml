@@ -10,12 +10,8 @@ phases:
       - export APP_VERSION=1.0.0-$CODEBUILD_BUILD_NUMBER
 
       - mkdir build
+
       - zip -j -r build/lambda-hw2-${APP_VERSION}.zip lambda-hw2/
+      - aws s3 cp build/lambda-hw2-${APP_VERSION}.zip s3://${S3_BUCKET}/hw2/lambda-hw2-${APP_VERSION}.zip
 
       - python cloudformation/deploy.py
-
-artifacts:
-  name: hw2
-  base-directory: build
-  files:
-    - '*.zip'
