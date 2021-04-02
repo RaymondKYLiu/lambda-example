@@ -22,4 +22,4 @@ artifacts:
   name: hw2
   files:
     - build/*.zip
-  base-directory: build
+  # base-directory: build
