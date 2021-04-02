@@ -1,11 +1,19 @@
 import os
 import subprocess
-from configparser import SafeConfigParser
+import configparser
 import shlex
-# import boto3
 
-config = SafeConfigParser()
-config.optionxform = str # # preserve case
+class EnvInterpolation(configparser.BasicInterpolation):
+    """Interpolation which expands environment variables in values.
+        https://stackoverflow.com/a/49529659
+    """
+
+    def before_get(self, parser, section, option, value, defaults):
+        value = super().before_get(parser, section, option, value, defaults)
+        return os.path.expandvars(value)
+
+config = configparser.ConfigParser(interpolation=EnvInterpolation())
+config.optionxform = str # preserve case
 config.read(os.path.join(os.path.dirname(__file__), 'parameters.ini'))
 
 parameters = []
