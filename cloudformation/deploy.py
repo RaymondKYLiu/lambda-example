@@ -1,10 +1,10 @@
 import os
 import subprocess
-from configparser import ConfigParser
+from configparser import SafeConfigParser
 import shlex
 # import boto3
 
-config = ConfigParser()
+config = SafeConfigParser()
 config.optionxform = str # # preserve case
 config.read(os.path.join(os.path.dirname(__file__), 'parameters.ini'))
 
