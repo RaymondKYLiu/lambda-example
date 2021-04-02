@@ -3,7 +3,12 @@ env:
   variables:
     S3_BUCKET: raymond-packages-us-west-2
 phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - pip install boto3
   build:
     commands:
-      - zip -r lambda-example.zip . -x '*.git*'
-      - aws s3 cp lambda-example.zip s3://${S3_BUCKET}/lambda-example-1.0.0-${CODEBUILD_BUILD_NUMBER}.zip
+      - zip -j -r lambda-hw2.zip lambda-hw2/
+      - aws s3 cp lambda-hw2.zip s3://${S3_BUCKET}/lambda-hw2-1.0.0-${CODEBUILD_BUILD_NUMBER}.zip
